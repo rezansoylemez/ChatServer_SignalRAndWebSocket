@@ -24,7 +24,9 @@ public class ChatHubController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        await _hubContext.Clients.All.SendAsync("ReceiveMessage", model.User, model.Message);
+        Console.WriteLine($"Received Message - User: {model.User}, Message: {model.MessageBody}");
+        await _hubContext.Clients.All.SendAsync("ReceiveMessage", model.User, model.MessageBody);
+        return Ok();
 
         return Ok();
     }
