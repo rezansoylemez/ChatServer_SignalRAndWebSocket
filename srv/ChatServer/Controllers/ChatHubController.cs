@@ -10,10 +10,11 @@ namespace ChatServer.Controllers;
 public class ChatHubController : ControllerBase
 {
     private readonly IHubContext<ChatHub> _hubContext;
-
-    public ChatHubController(IHubContext<ChatHub> hubContext)
+    private readonly ILogger<ChatHubController> _logger;
+    public ChatHubController(IHubContext<ChatHub> hubContext, ILogger<ChatHubController> logger)
     {
         _hubContext = hubContext;
+        _logger = logger;
     }
 
     [HttpPost("send")]
@@ -23,11 +24,11 @@ public class ChatHubController : ControllerBase
         {
             return BadRequest(ModelState);
         }
+        _logger.LogInformation($"Received Message - User: {model.User}, Message: {model.MessageBody}");
 
         Console.WriteLine($"Received Message - User: {model.User}, Message: {model.MessageBody}");
         await _hubContext.Clients.All.SendAsync("ReceiveMessage", model.User, model.MessageBody);
         return Ok();
 
-        return Ok();
     }
 }
