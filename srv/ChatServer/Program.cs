@@ -9,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BaseDbContext>(
 options => options.UseSqlServer(builder.Configuration.GetConnectionString("ChatServerDbConnection")
 ));
+
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<IUserRepository,UserRepository>();
 
 // Add services to the container.
 //Console Log 
