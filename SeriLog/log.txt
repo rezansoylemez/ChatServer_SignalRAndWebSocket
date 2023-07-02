@@ -11,3 +11,8 @@
 2023-07-01 03:52:26.317 +03:00 [INF] Executed action ChatServer.Controllers.ChatHubController.SendMessage (ChatServer) in 39.903ms
 2023-07-01 03:52:26.319 +03:00 [INF] Executed endpoint 'ChatServer.Controllers.ChatHubController.SendMessage (ChatServer)'
 2023-07-01 03:52:26.321 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5080/api/ChatHub/send application/json 61 - 200 0 - 101.6368ms
+2023-07-01 03:57:43.914 +03:00 [WRN] Failed to determine the https port for redirect.
+2023-07-01 03:57:43.980 +03:00 [INF] Received Message - User: Rezan1, Message: Test2 With SeriLog
+2023-07-01 03:57:55.335 +03:00 [INF] Received Message - User: Rezan1, Message: Test3 With SeriLog
+2023-07-01 03:58:18.368 +03:00 [WRN] Failed to determine the https port for redirect.
+2023-07-01 03:58:18.433 +03:00 [INF] Received Message - User: Rezan1, Message: Test4 With SeriLog
