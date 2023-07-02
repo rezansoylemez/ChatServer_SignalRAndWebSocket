@@ -1,4 +1,5 @@
 using ChatServer.Context;
+using ChatServer.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BaseDbContext>(
 options => options.UseSqlServer(builder.Configuration.GetConnectionString("ChatServerDbConnection")
 ));
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
 // Add services to the container.
 //Console Log 
 //Log.Logger = new LoggerConfiguration()
