@@ -10,6 +10,8 @@ public class BaseDbContext: DbContext
     protected IConfiguration Configuration { get; set; }
 
     public DbSet<Message> Messages { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Log> Logs { get; set; }
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {
         Configuration = configuration;

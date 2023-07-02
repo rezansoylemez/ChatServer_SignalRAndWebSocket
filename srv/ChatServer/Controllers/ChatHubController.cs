@@ -1,4 +1,5 @@
 ﻿using ChatServer.Models;
+using ChatServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.IO;
@@ -11,11 +12,17 @@ namespace ChatServer.Controllers;
 public class ChatHubController : ControllerBase
 {
     private readonly IHubContext<ChatHub> _hubContext;
-    private readonly ILogger<ChatHubController> _logger; 
-    public ChatHubController(IHubContext<ChatHub> hubContext, ILogger<ChatHubController> logger)
+    private readonly ILogger<ChatHubController> _logger;
+    private readonly ILogRepository _logRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IMessageRepository _messageRepository;
+    public ChatHubController(IHubContext<ChatHub> hubContext, ILogger<ChatHubController> logger, ILogRepository logRepository,IUserRepository userRepository, IMessageRepository messageRepository)
     {
         _hubContext = hubContext;
         _logger = logger;
+        _logRepository = logRepository;
+        _userRepository = userRepository;
+        _messageRepository = messageRepository;
     }
 
     [HttpPost("send")]
@@ -29,11 +36,27 @@ public class ChatHubController : ControllerBase
             return BadRequest(ModelState);
         }
         ReadLogsFromFileAndWriteToConsole(logFilePath);
-        _logger.LogInformation($"Received Message - User: {model.User}, Message: {model.MessageBody}");
+        _logger.LogInformation($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
 
-        Console.WriteLine($"Received Message - User: {model.User}, Message: {model.MessageBody}");
-        await _hubContext.Clients.All.SendAsync("ReceiveMessage", model.User, model.MessageBody);
+        Console.WriteLine($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
 
+        await _hubContext.Clients.All.SendAsync($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
+
+        var createdMessage = await _messageRepository.AddAsync(model);
+
+        User user = new User()
+        {
+            FirstName = model.UserFirstName, 
+            LastName = model.UserLastName
+        };
+        var createdUser = await _userRepository.AddAsync(user);
+
+        Log log = new Log()
+        {
+            MessageId = createdMessage.Id,
+            UserId = user.Id,
+        };
+        var createdLog = await _logRepository.AddAsync(log);
 
         return Ok();
 
