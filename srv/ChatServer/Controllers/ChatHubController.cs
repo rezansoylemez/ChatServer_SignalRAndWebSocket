@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace ChatServer.Controllers;
 
@@ -10,7 +11,7 @@ namespace ChatServer.Controllers;
 public class ChatHubController : ControllerBase
 {
     private readonly IHubContext<ChatHub> _hubContext;
-    private readonly ILogger<ChatHubController> _logger;
+    private readonly ILogger<ChatHubController> _logger; 
     public ChatHubController(IHubContext<ChatHub> hubContext, ILogger<ChatHubController> logger)
     {
         _hubContext = hubContext;
