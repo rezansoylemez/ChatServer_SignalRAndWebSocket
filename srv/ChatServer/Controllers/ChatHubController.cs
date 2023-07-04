@@ -57,8 +57,7 @@ public class ChatHubController : ControllerBase
 
         Log log = new Log()
         {
-            MessageId = createdMessage.Id,
-            UserId = user.Id,
+            MessageId = createdMessage.Id
         };
         var createdLog = await _logRepository.AddAsync(log);
 

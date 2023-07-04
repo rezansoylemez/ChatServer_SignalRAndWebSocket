@@ -8,7 +8,6 @@ public class Message:Entity
     public int UserId { get; set; } 
 
     public User User { get; set; } 
-    public Log Log { get; set; } 
      
     public Message()
     { 
