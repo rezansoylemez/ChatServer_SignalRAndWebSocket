@@ -7,7 +7,6 @@ public class User:Entity
 
     public ICollection<Message> Messages { get; set; } 
 
-
     public User()
     { 
     }
