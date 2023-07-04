@@ -1,22 +1,21 @@
 ﻿namespace ChatServer.Models;
 
 public class Log:Entity
-{
-    public  int MessageId { get; set; }
-    public int UserId { get; set; }
+{ 
+    public string LogMessage { get; set; }
+    public int MessageId { get; set; }       
 
-
-    public User User{ get; set; }
-    public Message Message { get; set; }
+     
+    public Message Message { get; set; }  
 
     public Log()
     {
     }
-    public Log(int id ,int messageId, int userId, User user):this()
+
+    public Log(int id ,string logMessage, int messageId, Message message):this() 
     {
-        Id = id; 
+        LogMessage = logMessage;
         MessageId = messageId;
-        UserId = userId;
-        User = user;
+        Message = message;
     }
 }

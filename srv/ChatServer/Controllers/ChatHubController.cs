@@ -35,21 +35,25 @@ public class ChatHubController : ControllerBase
         {
             return BadRequest(ModelState);
         }
+
+        var user = await _userRepository.GetAsync(a => a.Id == model.UserId);
+
+
         ReadLogsFromFileAndWriteToConsole(logFilePath);
-        _logger.LogInformation($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
+        _logger.LogInformation($"Received Message - UserFirstName: {user.FirstName},UserLastName: {user.LastName}, Message: {model.Body}");
 
-        Console.WriteLine($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
+        Console.WriteLine($"Received Message - UserFirstName: {user.FirstName},UserLastName: {user.LastName}, Message: {model.Body}");
 
-        await _hubContext.Clients.All.SendAsync($"Received Message - UserFirstName: {model.UserFirstName},UserLastName: {model.UserLastName}, Message: {model.MessageBody}");
+        await _hubContext.Clients.All.SendAsync($"Received Message - UserFirstName: {user.FirstName},UserLastName: {user.LastName}, Message: {model.Body}");
 
         var createdMessage = await _messageRepository.AddAsync(model);
 
-        User user = new User()
-        {
-            FirstName = model.UserFirstName, 
-            LastName = model.UserLastName
-        };
-        var createdUser = await _userRepository.AddAsync(user);
+        //User user = new User()
+        //{
+        //    FirstName = model.UserFirstName, 
+        //    LastName = model.UserLastName
+        //};
+        //var createdUser = await _userRepository.AddAsync(user);
 
         Log log = new Log()
         {

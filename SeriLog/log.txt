@@ -158,3 +158,152 @@ System.InvalidOperationException: The entity type 'User' was not found. Ensure t
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
 2023-07-03 00:02:40.274 +03:00 [WRN] Failed to determine the https port for redirect.
 2023-07-03 00:02:40.424 +03:00 [INF] Received Message - UserFirstName: Test FirstName,UserLastName: Test LastName, Message: This is a Test Message For Database Logging
+2023-07-03 15:26:24.905 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Messages] ADD CONSTRAINT [FK_Messages_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-03 15:27:14.108 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Messages] ADD CONSTRAINT [FK_Messages_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-03 15:28:21.956 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Messages] ADD CONSTRAINT [FK_Messages_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-03 15:28:47.077 +03:00 [ERR] Failed executing DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(max) NOT NULL,
+    [LastName] nvarchar(max) NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2023-07-03 15:29:21.081 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Logs] (
+    [Id] int NOT NULL IDENTITY,
+    [MessageId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Logs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Logs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-03 15:30:35.634 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Logs] (
+    [Id] int NOT NULL IDENTITY,
+    [MessageId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Logs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Logs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-03 15:45:56.644 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Log] (
+    [Id] int NOT NULL IDENTITY,
+    [MessageId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Log] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Log_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Log_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:06:23.041 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [MessageBody] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:11:21.442 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [Headers] nvarchar(max) NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:17:16.537 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [Headers] nvarchar(max) NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:18:45.980 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [Headers] nvarchar(max) NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:20:04.975 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [Headers] nvarchar(max) NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
+2023-07-04 11:23:05.149 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Message] (
+    [Id] int NOT NULL,
+    [Headers] nvarchar(max) NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Message] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
