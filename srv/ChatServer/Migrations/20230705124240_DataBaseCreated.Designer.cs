@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatServer.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20230705080233_ChatLobbyAndChatLobbyAndUserTablesAreAddedAndSomeTablesAreUpdated")]
-    partial class ChatLobbyAndChatLobbyAndUserTablesAreAddedAndSomeTablesAreUpdated
+    [Migration("20230705124240_DataBaseCreated")]
+    partial class DataBaseCreated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,9 @@ namespace ChatServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ChatLobbyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -108,12 +111,9 @@ namespace ChatServer.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LogMessage")
+                    b.Property<string>("LogName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -123,9 +123,9 @@ namespace ChatServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MessageId");
+                    b.HasIndex("ChatLobbyId");
 
-                    b.ToTable("MessageLogs", (string)null);
+                    b.ToTable("Logs", (string)null);
                 });
 
             modelBuilder.Entity("ChatServer.Models.Message", b =>
@@ -144,6 +144,10 @@ namespace ChatServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -193,13 +197,11 @@ namespace ChatServer.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -233,19 +235,19 @@ namespace ChatServer.Migrations
 
             modelBuilder.Entity("ChatServer.Models.Log", b =>
                 {
-                    b.HasOne("ChatServer.Models.Message", "Message")
-                        .WithMany()
-                        .HasForeignKey("MessageId")
+                    b.HasOne("ChatServer.Models.ChatLobby", "ChatLobby")
+                        .WithMany("Logs")
+                        .HasForeignKey("ChatLobbyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Message");
+                    b.Navigation("ChatLobby");
                 });
 
             modelBuilder.Entity("ChatServer.Models.Message", b =>
                 {
                     b.HasOne("ChatServer.Models.ChatLobby", "ChatLobby")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("ChatLobbyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -264,6 +266,10 @@ namespace ChatServer.Migrations
             modelBuilder.Entity("ChatServer.Models.ChatLobby", b =>
                 {
                     b.Navigation("ChatLobbyAndUsers");
+
+                    b.Navigation("Logs");
+
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("ChatServer.Models.User", b =>

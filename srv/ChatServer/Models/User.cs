@@ -6,7 +6,7 @@ public class User:Entity
 
 
     public ICollection<Message> Messages { get; set; }
-    public ICollection<ChatLobbyAndUser> ChatLobbyAndUsers { get; set; }
+    public ICollection<ChatLobbyAndUser> ChatLobbyAndUsers { get; set; } 
 
     public User()
     {

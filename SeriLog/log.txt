@@ -307,3 +307,106 @@ CREATE TABLE [Message] (
     CONSTRAINT [FK_Message_Log_Id] FOREIGN KEY ([Id]) REFERENCES [Log] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_Message_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
 );
+2023-07-05 11:19:59.051 +03:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [MessageLogs] ADD CONSTRAINT [FK_MessageLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-05 11:21:20.492 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [MessageLogs] ADD CONSTRAINT [FK_MessageLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-05 11:21:30.887 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [MessageLogs] ADD CONSTRAINT [FK_MessageLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE;
+2023-07-05 11:26:21.456 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ChatLobby] (
+    [Id] int NOT NULL IDENTITY,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_ChatLobby] PRIMARY KEY ([Id])
+);
+2023-07-05 11:28:04.464 +03:00 [ERR] Failed executing DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [MessageLogs] (
+    [Id] int NOT NULL IDENTITY,
+    [ChatLobbyId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [MessageId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_MessageLogs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_MessageLogs_ChatLobby_ChatLobbyId] FOREIGN KEY ([ChatLobbyId]) REFERENCES [ChatLobby] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_MessageLogs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_MessageLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-05 12:01:55.392 +03:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [MessageLogs] (
+    [Id] int NOT NULL IDENTITY,
+    [ChatLobbyId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [MessageId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_MessageLogs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_MessageLogs_ChatLobby_ChatLobbyId] FOREIGN KEY ([ChatLobbyId]) REFERENCES [ChatLobby] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_MessageLogs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_MessageLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-05 12:11:46.520 +03:00 [ERR] Failed executing DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Logs] (
+    [Id] int NOT NULL IDENTITY,
+    [ChatLobbyId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [MessageId] int NOT NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Logs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Logs_ChatLobby_ChatLobbyId] FOREIGN KEY ([ChatLobbyId]) REFERENCES [ChatLobby] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2023-07-05 12:14:54.292 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:14:54.394 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:14:57.504 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:14:57.819 +03:00 [ERR] Failed executing DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Logs] (
+    [Id] int NOT NULL IDENTITY,
+    [ChatLobbyId] int NOT NULL,
+    [MessageId] int NOT NULL,
+    [ChatLobbyId1] int NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Logs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Logs_ChatLobby_ChatLobbyId] FOREIGN KEY ([ChatLobbyId]) REFERENCES [ChatLobby] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_ChatLobby_ChatLobbyId1] FOREIGN KEY ([ChatLobbyId1]) REFERENCES [ChatLobby] ([Id]),
+    CONSTRAINT [FK_Logs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE
+);
+2023-07-05 12:24:48.840 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:24:48.952 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:24:51.372 +03:00 [WRN] The foreign key property 'Log.ChatLobbyId1' was created in shadow state because a conflicting property with the simple name 'ChatLobbyId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2023-07-05 12:24:51.753 +03:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Logs] (
+    [Id] int NOT NULL IDENTITY,
+    [LogName] nvarchar(max) NOT NULL,
+    [ChatLobbyId] int NOT NULL,
+    [MessageId] int NOT NULL,
+    [ChatLobbyId1] int NULL,
+    [Code] nvarchar(max) NULL,
+    [Status] bit NOT NULL,
+    [CreatedDate] datetime2 NULL,
+    [UpdatedDate] datetime2 NULL,
+    [DeletedDate] datetime2 NULL,
+    CONSTRAINT [PK_Logs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Logs_ChatLobby_ChatLobbyId] FOREIGN KEY ([ChatLobbyId]) REFERENCES [ChatLobby] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Logs_ChatLobby_ChatLobbyId1] FOREIGN KEY ([ChatLobbyId1]) REFERENCES [ChatLobby] ([Id]),
+    CONSTRAINT [FK_Logs_Messages_MessageId] FOREIGN KEY ([MessageId]) REFERENCES [Messages] ([Id]) ON DELETE CASCADE
+);
