@@ -2,8 +2,6 @@
 using ChatServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System.IO;
-using System.Runtime.InteropServices;
 
 namespace ChatServer.Controllers;
 
@@ -57,7 +55,8 @@ public class ChatHubController : ControllerBase
 
         Log log = new Log()
         {
-            MessageId = createdMessage.Id
+            MessageId = createdMessage.Id,
+            LogMessage= model.Body
         };
         var createdLog = await _logRepository.AddAsync(log);
 
@@ -65,8 +64,7 @@ public class ChatHubController : ControllerBase
 
     }
 
-
-    // Log dosyasını okuyarak logları Console'a yazdıran bir metot
+     
     static void ReadLogsFromFileAndWriteToConsole(string filePath)
     {
         //File(filePath);
