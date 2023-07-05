@@ -8,13 +8,14 @@ public class LogConfiguration : IEntityTypeConfiguration<Log>
 {
     public void Configure(EntityTypeBuilder<Log> builder)
     {
-        builder.ToTable("MessageLogs"); 
-        builder.HasKey(ml => ml.Id);  
-        builder.Property(ml => ml.LogMessage).IsRequired();   
+        builder.ToTable("Logs");
+        builder.HasKey(log => log.Id);
+        builder.Property(log => log.ChatLobbyId).IsRequired(); 
          
-        builder.HasOne(ml => ml.Message)
-               .WithMany()
-               .HasForeignKey(ml => ml.MessageId)
-               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(log => log.ChatLobby)
+            .WithMany(m => m.Logs)
+            .HasForeignKey(log => log.ChatLobbyId);
+
     }
 }

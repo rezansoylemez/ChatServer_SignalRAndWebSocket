@@ -4,11 +4,12 @@ public class Message:Entity
     public string Headers { get; set; }
     public string Body { get; set; }
 
+    public int ChatLobbyId { get; set; }
+    public ChatLobby ChatLobby { get; set; }
+    public int UserId { get; set; }
+    public User User { get; set; }
+    public string Content { get; set; }
 
-    public int UserId { get; set; } 
-
-    public User User { get; set; } 
-     
     public Message()
     { 
     }
