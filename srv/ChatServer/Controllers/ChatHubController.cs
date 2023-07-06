@@ -1,4 +1,5 @@
-﻿using ChatServer.Models;
+﻿using ChatServer.Context;
+using ChatServer.Models;
 using ChatServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -62,19 +63,49 @@ public class ChatHubController : ControllerBase
         return Ok();
 
     }
-
-     
-    static void ReadLogsFromFileAndWriteToConsole(string filePath)
+    public async void SendMessage(int userId, int chatLobbyId, string content)
     {
-        //File(filePath);
-        //if (filePath.DefaultIfEmpty())
-        //{
-        //    string[] logLines = File.ReadAllLines(filePath);
+        var user = await _userRepository.GetAsync(a => a.Id == userId);
 
-        //    foreach (string logLine in logLines)
+        //using (var dbContext = new  BaseDbContext())
+        //{
+        //    var chatLobby = dbContext.ChatLobbies
+        //        .Include(cl => cl.ChatLobbyUsers)
+        //        .ThenInclude(clu => clu.User)
+        //        .FirstOrDefault(cl => cl.Id == chatLobbyId);
+             
+        //    if (user != null && chatLobby != null)
         //    {
-        //        Console.WriteLine(logLine);
+        //        // Mesajı oluşturun ve kaydedin
+        //        var message = new Message
+        //        {
+        //            ChatLobby = chatLobby,
+        //            User = user,
+        //            Content = content
+        //        };
+
+        //        dbContext.Messages.Add(message);
+        //        dbContext.SaveChanges();
+
+        //        // Mesajı loglayın
+        //        var log = new Log
+        //        {
+        //            ChatLobby = chatLobby,
+        //            User = user,
+        //            Message = message
+        //        };
+
+        //        dbContext.Logs.Add(log);
+        //        dbContext.SaveChanges();
+
+        //        Console.WriteLine($"Mesaj gönderildi - User: {user.FirstName} {user.LastName}, ChatLobbyId: {chatLobby.Id}, İçerik: {content}");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Kullanıcı veya chat lobi bulunamadı.");
         //    }
         //}
     }
+
+
 }
